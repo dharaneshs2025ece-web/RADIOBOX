@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RadioBox – Online Music Player</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #1f0033, #4c0070, #79018C);
+        color: white;
+        overflow-x: hidden;
+    }
+
+    header {
+        text-align: center;
+        padding: 25px;
+        font-size: 28px;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px #ff00ff;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* NOW PLAYING BOX */
+    #nowPlayingBox {
+        margin: 30px auto;
+        padding: 20px;
+        width: 80%;
+        max-width: 600px;
+        text-align: center;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { box-shadow: 0 0 10px #ff00ff; }
+        to { box-shadow: 0 0 25px #ff99ff; }
+    }
+
+    #currentTrack {
+        font-size: 22px;
+        font-weight: 600;
+        color: #ffe6ff;
+    }
+
+    /* TRACK CARDS */
+    .track-list {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .track {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 20px;
+        margin-bottom: 25px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s, box-shadow 0.3s;
+        backdrop-filter: blur(8px);
+    }
+
+    .track:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+
+    .track h3 {
+        margin-bottom: 15px;
+        font-size: 20px;
+        text-shadow: 0 0 10px #ff77ff;
+    }
+
+    /* BUTTON STYLING */
+    button {
+        padding: 10px 18px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.25s;
+        background: white;
+        color: #333;
+    }
+
+    button:hover {
+        background: #ff00ff;
+        color: white;
+        box-shadow: 0 0 15px #ff00ff;
+        transform: translateY(-3px);
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+    }
+
+    footer a {
+        color: yellow;
+        font-weight: 600;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    🎧 RadioBox – Premium Online Music Player
+</header>
+
+<section id="nowPlayingBox">
+    <h2>Now Playing</h2>
+    <p id="currentTrack">No track playing</p>
+</section>
+
+<section class="track-list">
+
+    <div class="track">
+        <h3>🌙 Relaxing Lofi Beats</h3>
+        <audio id="audio1" src="music1.mp3"></audio>
+        <button onclick="playTrack('audio1','Relaxing Lofi Beats')">▶ Play</button>
+        <button onclick="pauseTrack('audio1')">⏸ Pause</button>
+    </div>
+
+    <div class="track">
+        <h3>📻 India FM Radio Live</h3>
+        <audio id="audio2" src="https://stream-icy.bauermedia.co.uk/coolfm.mp3"></audio>
+        <button onclick="playTrack('audio2','India FM Radio Live')">▶ Play</button>
+        <button onclick="pauseTrack('audio2')">⏸ Pause</button>
+    </div>
+
+    <div class="track">
+        <h3>🎹 Retro Classics Mix</h3>
+        <audio id="audio3" src="music2.mp3"></audio>
+        <button onclick="playTrack('audio3','Retro Classics Mix')">▶ Play</button>
+        <button onclick="pauseTrack('audio3')">⏸ Pause</button>
+    </div>
+
+</section>
+
+<footer>
+    Created by <b>Your Name</b> •  
+    <a href="#">GitHub Repository</a>
+</footer>
+
+<script>
+    let allTracks = document.querySelectorAll("audio");
+
+    function playTrack(id, name) {
+        allTracks.forEach(track => track.pause());
+        let audio = document.getElementById(id);
+        audio.play();
+        document.getElementById("currentTrack").textContent = name;
+    }
+
+    function pauseTrack(id) {
+        let audio = document.getElementById(id);
+        audio.pause();
+
+        if (!isAnyPlaying()) {
+            document.getElementById("currentTrack").textContent = "No track playing";
+        }
+    }
+
+    function isAnyPlaying() {
+        return Array.from(allTracks).some(t => !t.paused);
+    }
+</script>
+
+</body>
+</html>
